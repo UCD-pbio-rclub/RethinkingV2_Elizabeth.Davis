@@ -1,0 +1,99 @@
+#HW week 2 Statistical Rethinking
+
+# 2E1
+# (4) Pr(rain|Monday)
+  
+
+# 2E2
+# (3) The probability that it is Monday, given that it is raining.
+
+
+# 2E3
+# (1) Pr(Monday|rain)
+
+
+# 2M1
+# (1) W W W
+# define grid (i.e. set up how many points used to estimate the posterior)
+p_grid = seq( from=0 , to=1 , length.out=20 )
+# define prior (i.e. compute the value of the prior at each parameter value on the grid)
+prior = rep( 1 , 20 )
+# compute likelihood at each value in grid, x=water selected, size=sample size, prob=probability
+likelihood = dbinom( x=3 , size=3 , prob=p_grid )
+# compute unstandardized posterior (i.e.) product of likelihood and prior 
+unstd.posterior = likelihood * prior
+# standardize the posterior, so it sums to 1 (i.e. divide each value by the sum of all values)
+posterior = unstd.posterior / sum(unstd.posterior)
+# plot posterior distribution by grid approximation
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+# adds text to plot
+mtext( "20 points" )
+
+# (2) W W W L
+likelihood = dbinom( 3, 4, p_grid)
+unstd.posterior = likelihood * prior
+posterior = unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+mtext( "20 points" )
+
+# (3) L W W W L W W W
+likelihood = dbinom( 6, 8, p_grid)
+unstd.posterior = likelihood * prior
+posterior = unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+mtext( "20 points" )
+
+
+# 2M2
+# assume prior for p that is equal to zero when p<0.5 and positive constant when p greater than or equal to 0.5
+# (1) W W W
+prior = ifelse( p_grid < 0.5 , 0 , 1 )
+likelihood = dbinom( 3, 3, p_grid)
+unstd.posterior = likelihood * prior
+posterior = unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+mtext( "20 points" )
+# (2) W W W L
+likelihood = dbinom( 3, 4, p_grid)
+unstd.posterior = likelihood * prior
+posterior = unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+mtext( "20 points" )
+
+# (3) L W W W L W W W
+likelihood = dbinom( 6, 8, p_grid)
+unstd.posterior = likelihood * prior
+posterior = unstd.posterior / sum(unstd.posterior)
+plot( p_grid , posterior , type="b" , xlab="probability of water" , ylab="posterior probability" ) 
+mtext( "20 points" )
+
+
+# 2M3
+# 2 globes= 1 Earth & 1 Mars Earth equally likely to be tossed
+toss_earth=0.5
+toss_mars=0.5
+# globe 70% water, Mars 0% water
+land_earth=0.3
+land_mars=1
+# probability equation p(earth|land)=((0.5*0.3)/(0.5*0.3+0.5*1))*0.5*0.3
+Pr_earth_land=(toss_earth*land_earth)/((toss_mars*land_mars)+(toss_earth*land_earth))
+# show (Pr(Earth|land)) is 0.23
+Pr_earth_land
+
+
+# 2M4
+# 3 card deck: 1 black & white, 1 black & black, 1 white & white
+# Use counting method to solve which card given random & black side up
+# black & white=1 black up
+# black & black=2 black up
+# white & white=0 black up
+# therefore prob of black on back= 2/(1+2+0)= 2/3
+
+
+# 2M5
+# 4 card deck: B/B, B/W, W/W, B/B;draw black side up, what is prob other side is black?
+# B/B= 2
+# B/B= 2
+# B/W= 1
+# W/w= 0
+# therefore prob of black on back= (2+2)/(2+2+1+0)= 4/5
